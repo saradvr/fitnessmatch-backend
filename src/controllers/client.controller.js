@@ -8,7 +8,7 @@ module.exports = {
     try {
       const {body} = req
       const client = await Client.create(body)
-      await client.save({validateBeforeSave: false})
+      
       res.status(201).json(client)
     } catch(error) {
         res.status(400).json(`Error en la creacion ${error}`)
