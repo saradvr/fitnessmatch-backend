@@ -1,6 +1,7 @@
 const router = require("express").Router()
-const { create, list } = require("../controllers/client.controller")
+const { list, update } = require("../controllers/client.controller")
 
-router.route("/").post(create)
+router.route("/").get(list)
+router.route("/:clientId").put(update)
 
 module.exports = router

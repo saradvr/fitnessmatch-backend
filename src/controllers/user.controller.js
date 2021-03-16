@@ -2,6 +2,7 @@ const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const Coach = require('../models/coach.model')
 const User = require('../models/user.model')
+const Client = require('../models/client.model')
 
 module.exports = {
   async signup(req, res){
@@ -12,6 +13,12 @@ module.exports = {
         const coach = await Coach.create({name, user:user._id})
         user.coachId = coach._id
         await user.save({ validateBeforeSave: false })
+      } else if(userType === 'client'){
+        const client = await Client.create({name, user:user._id})
+        user.clientId = client._id
+        await user.save({ validateBeforeSave: false})
+      } else {
+        throw Error(`Tipo de usuario incorrecto`)
       }
 
       const token = jwt.sign(

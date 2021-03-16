@@ -24,7 +24,11 @@ const userSchema = new Schema({
   coachId: {
     type: Schema.Types.ObjectId, 
     ref: 'Coach'
-  }
+  },
+  clientId: {
+    type: Schema.Types.ObjectId, 
+    ref: 'Client',
+  },
 }, {
   timestamps: true,
 })
