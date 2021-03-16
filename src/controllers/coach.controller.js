@@ -5,8 +5,7 @@ module.exports = {
   async update(req, res) {
     try {
       const { body, params: {coachId} } = req
-      const coach = await Coach.findByIdAndUpdate( coachId, body )
-      await coach.save({ validateBeforeSave: false })
+      const coach = await Coach.findByIdAndUpdate( coachId, body, {new: true} )
       res.status(201).json({ message: 'Datos actualizados con éxito', coach})
     } catch (error) {
       res.status(400).json({ message: 'No se pudo actualizar los datos', error})
