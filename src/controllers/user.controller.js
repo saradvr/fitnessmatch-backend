@@ -19,6 +19,8 @@ module.exports = {
           const client = await Client.create({name, user:user._id, metric:metric._id})
           user.clientId = client._id
           await user.save({ validateBeforeSave: false})
+          metric.clientId = client._id
+          await metric.save({validateBeforeSave: false})
       } else {
         throw Error(`Tipo de usuario incorrecto`)
       }

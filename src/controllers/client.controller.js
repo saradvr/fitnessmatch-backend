@@ -1,4 +1,3 @@
-const express = require("express")
 const Client = require("../models/client.model")
 
 

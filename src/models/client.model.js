@@ -1,4 +1,4 @@
-const {model, models, Schema } = require("mongoose")
+const {model, Schema } = require("mongoose")
 
 const clientSchema = new Schema({
   name: {
@@ -16,6 +16,10 @@ const clientSchema = new Schema({
   appointments: {
     type: Array,
   },
+  metric: {
+    type: Schema.Types.ObjectId,
+    ref: "Metric"
+  }
 },
 {
   timestamps: true,

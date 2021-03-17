@@ -1,11 +1,10 @@
-const express = require("express")
 const Metric = require("../models/metric.model")
 
 module.exports = {
    async update(req, res) {
      try {
       const {body:{weight, height}, params:{metricId}} = req
-      const metric = await Metric.findByIdAndUpdate(metricId, body, {new: true})
+      const metric = await Metric.findByIdAndUpdate(metricId, {weight, height}, {new: true})
       metric.bmi = weight/(height**2)
       await metric.save({validateBeforeSave: false})
 
