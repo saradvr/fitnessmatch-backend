@@ -6,7 +6,7 @@ const userRouter =require('./routes/user')
 const coachRouter = require('./routes/coach')
 const metricRouter = require("./routes/metric")
 
-const port = process.env.PORT || 8010
+const port = process.env.PORT
 const app = express()
 connect()
 
