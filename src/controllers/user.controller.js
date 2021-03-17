@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken')
 const Coach = require('../models/coach.model')
 const User = require('../models/user.model')
 const Client = require('../models/client.model')
+const Metric = require('../models/metric.model')
 
 module.exports = {
   async signup(req, res){
@@ -14,9 +15,10 @@ module.exports = {
         user.coachId = coach._id
         await user.save({ validateBeforeSave: false })
       } else if(userType === 'client'){
-        const client = await Client.create({name, user:user._id})
-        user.clientId = client._id
-        await user.save({ validateBeforeSave: false})
+          const metric = await Metric.create({height:0, weight:0})
+          const client = await Client.create({name, user:user._id, metric:metric._id})
+          user.clientId = client._id
+          await user.save({ validateBeforeSave: false})
       } else {
         throw Error(`Tipo de usuario incorrecto`)
       }

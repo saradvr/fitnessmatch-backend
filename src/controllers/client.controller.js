@@ -1,6 +1,4 @@
 const express = require("express")
-const { get } = require("mongoose")
-const { update } = require("../models/client.model")
 const Client = require("../models/client.model")
 
 
