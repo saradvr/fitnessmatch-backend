@@ -9,7 +9,7 @@ module.exports = {
       const { email, password, name, userType } = req.body
       const user = await User.create({email, password})
       if (userType === 'coach'){
-        const coach = await Coach.create({name, user:user._id})
+        const coach = await Coach.create({name, profilePicture:"https://cdn.iconscout.com/icon/free/png-256/user-1648810-1401302.png", user:user._id})
         user.coachId = coach._id
         await user.save({ validateBeforeSave: false })
       }
