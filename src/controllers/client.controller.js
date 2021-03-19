@@ -28,7 +28,6 @@ module.exports = {
           const discipline = await Discipline.findByIdAndUpdate(disciplineId, {$push: {clientsId: clientId}}, {new: true})
         }
       }
-
       res.status(201).json(client)
     }catch(error) {
       res.status(400).json(`No se puede actualizar el cliente ${error}`)

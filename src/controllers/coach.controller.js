@@ -15,7 +15,6 @@ module.exports = {
       }
       if(body.disciplines){
         for (const disciplineId of body.disciplines){
-          console.log(disciplineId)
           const discipline = await Discipline.findByIdAndUpdate(disciplineId, {$push: {coachesId: coachId}}, {new: true})
         }
       }
