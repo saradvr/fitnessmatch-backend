@@ -13,8 +13,10 @@ module.exports = {
   },
   async list(req, res) {
     try {
-      const {query} = req
-      const coaches = await Coach.find(query)
+      const {query: {minFee, maxFee}} = req
+      const coaches = await Coach.find({ 
+        appointmentFee: { $gte: minFee, $lte: maxFee }
+      })
       res.status(200).json(coaches)
     } catch(error) {
       res.status(500).json(error)
