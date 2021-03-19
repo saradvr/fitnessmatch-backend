@@ -1,7 +1,7 @@
 const Client = require("../models/client.model")
 const Specialization = require('../models/specialization.model')
 const Discipline = require('../models/discipline.model')
-
+const updateInterests = require('../utils/updateInterests')
 
 module.exports = {
   async list(req, res) {
@@ -18,16 +18,10 @@ module.exports = {
     try{
       const {body, params:{clientId}} = req
       const client = await Client.findByIdAndUpdate(clientId, body, {new:true})
-      if(body.specializations){
-        for (const specializationId of body.specializations){
-          const specialization = await Specialization.findByIdAndUpdate(specializationId, {$push: {clientsId: clientId}}, {new: true})
-        }
-      }
-      if(body.disciplines){
-        for (const disciplineId of body.disciplines){
-          const discipline = await Discipline.findByIdAndUpdate(disciplineId, {$push: {clientsId: clientId}}, {new: true})
-        }
-      }
+      
+      await updateInterests(Specialization, body.specializations, 'clientsId', clientId)
+      await updateInterests(Discipline, body.disciplines, 'clientsId', clientId)
+      
       res.status(201).json(client)
     }catch(error) {
       res.status(400).json(`No se puede actualizar el cliente ${error}`)

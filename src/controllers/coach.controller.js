@@ -2,22 +2,17 @@ const Coach = require('../models/coach.model')
 const Specialization = require('../models/specialization.model')
 const Discipline = require('../models/discipline.model')
 const User = require('../models/user.model')
+const updateInterests = require('../utils/updateInterests')
 
 module.exports = {
   async update(req, res) {
     try {
       const { body, params: {coachId} } = req
       const coach = await Coach.findByIdAndUpdate( coachId, body, {new: true} )
-      if(body.specializations){
-        for (const specializationId of body.specializations){
-          const specialization = await Specialization.findByIdAndUpdate(specializationId, {$push: {coachesId: coachId}}, {new: true})
-        }
-      }
-      if(body.disciplines){
-        for (const disciplineId of body.disciplines){
-          const discipline = await Discipline.findByIdAndUpdate(disciplineId, {$push: {coachesId: coachId}}, {new: true})
-        }
-      }
+
+      await updateInterests(Specialization, body.specializations, 'coachesId', coachId)
+      await updateInterests(Discipline, body.disciplines, 'coachesId', coachId)
+
       res.status(201).json({ message: 'Datos actualizados con éxito', coach})
     } catch (error) {
       res.status(400).json(`Error ${error}`)
