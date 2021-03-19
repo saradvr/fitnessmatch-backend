@@ -29,13 +29,15 @@ const coachSchema = new Schema({
     type: [{ type: String }]
   },
   specializations: {
-    type: [{ type: Schema.Types.ObjectId,
-             ref:'Specialization',
+    type: [{ 
+      type: Schema.Types.ObjectId,
+      ref:'Specialization',
     }]
   },
   disciplines: {
-    type: [{ type: Schema.Types.ObjectId,
-             ref:'Discipline',
+    type: [{ 
+      type: Schema.Types.ObjectId,
+      ref:'Discipline',
     }]
   },
 

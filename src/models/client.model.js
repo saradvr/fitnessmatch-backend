@@ -21,13 +21,15 @@ const clientSchema = new Schema({
     ref: "Metric"
   },
   specializations: {
-    type: [{ type: Schema.Types.ObjectId,
-             ref:'Specialization',
+    type: [{ 
+      type: Schema.Types.ObjectId,
+      ref:'Specialization',
     }]
   },
   disciplines: {
-    type: [{ type: Schema.Types.ObjectId,
-             ref:'Discipline',
+    type: [{ 
+      type: Schema.Types.ObjectId,
+      ref:'Discipline',
     }]
   },
 },
