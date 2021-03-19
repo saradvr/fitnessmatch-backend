@@ -5,12 +5,12 @@ const specializationSchema = new Schema({
     type: String,
     required: true,
   },
-  coachId: [{
+  coachesId: [{
       type: Schema.Types.ObjectId,
       ref: 'Coach'
     },
   ],
-  clientId: [{
+  clientsId: [{
       type: Schema.Types.ObjectId,
       ref: 'Client'
     },

@@ -19,7 +19,17 @@ const clientSchema = new Schema({
   metric: {
     type: Schema.Types.ObjectId,
     ref: "Metric"
-  }
+  },
+  specializations: {
+    type: [{ type: Schema.Types.ObjectId,
+             ref:'Specialization',
+    }]
+  },
+  disciplines: {
+    type: [{ type: Schema.Types.ObjectId,
+             ref:'Discipline',
+    }]
+  },
 },
 {
   timestamps: true,

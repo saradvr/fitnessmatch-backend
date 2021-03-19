@@ -1,4 +1,6 @@
 const Client = require("../models/client.model")
+const Specialization = require('../models/specialization.model')
+const Discipline = require('../models/discipline.model')
 
 
 module.exports = {
@@ -16,6 +18,16 @@ module.exports = {
     try{
       const {body, params:{clientId}} = req
       const client = await Client.findByIdAndUpdate(clientId, body, {new:true})
+      if(body.specializations){
+        for (const specializationId of body.specializations){
+          const specialization = await Specialization.findByIdAndUpdate(specializationId, {$push: {clientsId: clientId}}, {new: true})
+        }
+      }
+      if(body.disciplines){
+        for (const disciplineId of body.disciplines){
+          const discipline = await Discipline.findByIdAndUpdate(disciplineId, {$push: {clientsId: clientId}}, {new: true})
+        }
+      }
 
       res.status(201).json(client)
     }catch(error) {

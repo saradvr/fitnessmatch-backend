@@ -5,12 +5,10 @@ const disciplineSchema = new Schema({
     type: String,
     required: true,
   },
-  coachId: [{
-      type: Schema.Types.ObjectId,
-      ref: 'Coach'
-    },
-  ],
-  clientId: [{
+  coachesId: {
+    type: [{type: Schema.Types.ObjectId, ref: 'Coach'}]
+  },
+  clientsId: [{
       type: Schema.Types.ObjectId,
       ref: 'Client'
     },

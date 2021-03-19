@@ -27,7 +27,18 @@ const coachSchema = new Schema({
   },
   uploadedFiles: {
     type: [{ type: String }]
-  }
+  },
+  specializations: {
+    type: [{ type: Schema.Types.ObjectId,
+             ref:'Specialization',
+    }]
+  },
+  disciplines: {
+    type: [{ type: Schema.Types.ObjectId,
+             ref:'Discipline',
+    }]
+  },
+
 },{
   timestamps: true,
 })
