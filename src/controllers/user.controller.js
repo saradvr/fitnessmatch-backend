@@ -33,7 +33,7 @@ module.exports = {
       
       res.status(201).json({token})
     } catch(error ){
-      res.status(400).json(`Error en el signup ${error}`)
+      res.status(400).json({error})
     }
   },
   async signin(req, res){
