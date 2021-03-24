@@ -19,5 +19,14 @@ module.exports = {
     } catch (error) {
       res.status(400).json({ message: 'No se pudo actualizar la especializacion', error})
     }
+  },
+  async list(req, res) {
+    try {
+      const {query} = req
+      const specializations = await Specialization.find(query)
+      res.status(200).json(specializations)
+    } catch(error) {
+      res.status(500).json(error)
+    }
   }
 }
