@@ -20,11 +20,29 @@ module.exports = {
   },
   async list(req, res) {
     try {
-      const {query} = req
-      const coaches = await Coach.find(query)
+      const {query: {minFee, maxFee, checkDisciplines, checkSpecializations}} = req
+      let filters = {
+        appointmentFee: { $gte: minFee, $lte: maxFee },
+      }
+      if(checkSpecializations){
+        filters.specializations = { $in: checkSpecializations }
+      }
+      if(checkDisciplines){
+        filters.disciplines = { $in: checkDisciplines }
+      }
+      const coaches = await Coach
+        .find(filters)
+        .populate({
+          path: 'specializations',
+          select: 'name'
+        })
+        .populate({
+          path: 'disciplines',
+          select: 'name'
+        })
       res.status(200).json(coaches)
     } catch(error) {
-      res.status(500).json(error)
+      res.status(500).json(`El error es ${error}`)
     }
   }
 }

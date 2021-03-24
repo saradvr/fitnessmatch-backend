@@ -19,5 +19,14 @@ module.exports = {
     } catch (error) {
       res.status(400).json({ message: 'No se pudo actualizar la disciplina', error})
     }
+  },
+  async list(req, res) {
+    try {
+      const {query} = req
+      const disciplines = await Discipline.find(query)
+      res.status(200).json(disciplines)
+    } catch(error) {
+      res.status(500).json(error)
+    }
   }
 }
