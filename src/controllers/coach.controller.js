@@ -21,8 +21,10 @@ module.exports = {
   async list(req, res) {
     try {
       const {query: {minFee, maxFee, checkDisciplines, checkSpecializations}} = req
-      let filters = {
-        appointmentFee: { $gte: minFee, $lte: maxFee },
+      let filters = {}
+      
+      if(minFee || maxFee){
+        filters.appointmentFee = { $gte: minFee, $lte: maxFee }
       }
       if(checkSpecializations){
         filters.specializations = { $in: checkSpecializations }
