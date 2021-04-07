@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fmbackenddeployment
+spec:
+  selector:
+    matchLabels:
+      app: fmbackendlabel
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: fmbackendlabel
+    spec:
+      containers:
+        - name: fmbackendcontainer
+          imagePullPolicy: Never
+          image: fitnessmatch-backend
+          ports:
+            - containerPort: 8000
+          env:
+            - name: PORT
+              value: "8000"
+            - name: MONGO_URI
+              value: "mongodb://localhost:27017/fitnessmatchdb"
+            - name: SECRET
+              value: "naiuovurihaqhpfiwqejfpskdfnmsadnf65484"
