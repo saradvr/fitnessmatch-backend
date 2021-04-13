@@ -12,12 +12,16 @@ exports.auth = (req, res, next) => {
       throw new Error('Su sesión expiró')
     }
 
-    const { userId } = jwt.verify(token, process.env.SECRET)
+    const { userId, userTypeId, userType } = jwt.verify(token, process.env.SECRET)
 
-    req.user = userId
+    req.user = {
+      userId,
+      userTypeId,
+      userType
+    }
 
     next()
   } catch (error) {
-    res.status(401).json({ message: error.message })
+    res.status(401).json({ message: 'Su sesión expiró', error })
   }
 }
