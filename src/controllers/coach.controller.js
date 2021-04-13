@@ -40,7 +40,6 @@ module.exports = {
     try {
       const { query: {minFee, maxFee, checkDisciplines, checkSpecializations} } = req
       let filters = {}
-      let coaches = []
 
       if(minFee || maxFee){
         filters.appointmentFee = { $gte: minFee, $lte: maxFee }
@@ -52,7 +51,7 @@ module.exports = {
         filters.disciplines = { $in: checkDisciplines }
       }
 
-      coaches = await Coach
+      const coaches = await Coach
         .find(filters)
         .populate({
           path: 'specializations',
