@@ -1,7 +1,8 @@
 const router = require("express").Router()
 const { list, update } = require("../controllers/client.controller")
+const { formData } = require("../utils/formData")
 
 router.route("/").get(list)
-router.route("/:clientId").put(update)
+router.route("/clientprofile").put(formData, update)
 
 module.exports = router
