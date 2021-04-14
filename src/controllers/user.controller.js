@@ -15,18 +15,22 @@ module.exports = {
         user.coachId = coach._id
         await user.save({ validateBeforeSave: false })
       } else if(userType === 'client'){
-          const metric = await Metric.create({height:0, weight:0})
-          const client = await Client.create({name, user:user._id, metric:metric._id})
-          user.clientId = client._id
-          await user.save({ validateBeforeSave: false})
-          metric.clientId = client._id
-          await metric.save({validateBeforeSave: false})
+        const metric = await Metric.create({height:0, weight:0})
+        const client = await Client.create({name, user:user._id, metric:metric._id})
+        user.clientId = client._id
+        await user.save({ validateBeforeSave: false})
+        metric.clientId = client._id
+        await metric.save({validateBeforeSave: false})
       } else {
         throw Error(`Tipo de usuario incorrecto`)
       }
 
       const token = jwt.sign(
-        {userId: user._id},
+        {
+          userId: user._id,
+          userTypeId: user.coachId ? user.coachId : user.clientId,
+          userType: user.coachId ? 'coach' : 'client' 
+        },
         process.env.SECRET,
         {expiresIn: 60 * 60}
       )
@@ -53,7 +57,11 @@ module.exports = {
       }
 
       const token = jwt.sign(
-        { userId: user._id},
+        {
+          userId: user._id,
+          userTypeId: user.coachId ? user.coachId : user.clientId,
+          userType: user.coachId ? 'coach' : 'client' 
+        },
         process.env.SECRET,
         { expiresIn: 60 * 60}
       )

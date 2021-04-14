@@ -40,6 +40,9 @@ const coachSchema = new Schema({
       ref:'Discipline',
     }]
   },
+  availableHours: {
+    type: [{ type: String }]
+  }
 
 },{
   timestamps: true,
