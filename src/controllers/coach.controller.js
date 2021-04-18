@@ -15,14 +15,32 @@ module.exports = {
 
       res.status(201).json({ message: 'Datos actualizados con éxito', coach})
     } catch (error) {
-      res.status(400).json(`Error ${error}`)
+      res.status(400).json({message: 'No se pudo actualizar el entrenador', error})
+    }
+  },
+  async setAvailability(req, res){
+    try{
+      const { body, user:{ userTypeId } } = req
+      const coach = await Coach.findByIdAndUpdate( userTypeId, body, {new: true} )
+      res.status(201).json({ message: 'Guardado con éxito', coach})
+    } catch (error) {
+      res.status(400).json({message: 'No se pudo guardar la disponibilidad', error})
+    }
+  },
+  async getCoach(req, res){
+    try {
+      const { user: {userTypeId} } = req
+      const coach = await Coach.findById(userTypeId) 
+      res.status(201).json({message: 'Entrenador cargado con éxito', coach})
+    } catch (error) {
+      res.status(400).json({message: 'No se pudo obtener los datos del entrenador', error})
     }
   },
   async list(req, res) {
     try {
-      const {query: {minFee, maxFee, checkDisciplines, checkSpecializations}} = req
+      const { query: {minFee, maxFee, checkDisciplines, checkSpecializations} } = req
       let filters = {}
-      
+
       if(minFee || maxFee){
         filters.appointmentFee = { $gte: minFee, $lte: maxFee }
       }
@@ -32,6 +50,7 @@ module.exports = {
       if(checkDisciplines){
         filters.disciplines = { $in: checkDisciplines }
       }
+
       const coaches = await Coach
         .find(filters)
         .populate({
@@ -42,6 +61,7 @@ module.exports = {
           path: 'disciplines',
           select: 'name'
         })
+
       res.status(200).json(coaches)
     } catch(error) {
       res.status(500).json(`El error es ${error}`)
