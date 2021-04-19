@@ -39,7 +39,8 @@ module.exports = {
   async getPublicCoach(req, res){
     try {
       const { params: {coachId}} = req
-      const coach = await Coach.findById( coachId ).select('-_id -password')
+      const coach = await Coach.findById( coachId ).select('-password')
+      console.log(coach)
       res.status(201).json({message: 'Entrenador cargado con éxito', coach})
     } catch (error) {
       res.status(400).json({message: 'No se pudo cargar los datos del entrenador', error})
