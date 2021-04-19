@@ -34,7 +34,7 @@ exports.formData = (req, res, next) => {
     (err, res) =>{
       if(err) throw new Error('Algo salió mal')
 
-      req.body[key] = res
+      req.body[key] = res.secure_url
       uploadingFile = false
       uploadingCount--
 

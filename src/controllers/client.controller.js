@@ -1,6 +1,7 @@
 const Client = require("../models/client.model")
 const Specialization = require('../models/specialization.model')
 const Discipline = require('../models/discipline.model')
+const Metric = require('../models/metric.model')
 const updateInterests = require('../utils/updateInterests')
 
 module.exports = {
@@ -16,11 +17,12 @@ module.exports = {
   },
   async update(req, res) {
     try{
-      const {body, params:{clientId}} = req
-      const client = await Client.findByIdAndUpdate(clientId, body, {new:true})
-      
-      await updateInterests(Specialization, body.specializations, 'clientsId', clientId)
-      await updateInterests(Discipline, body.disciplines, 'clientsId', clientId)
+      const {body, user: {userTypeId}} = req
+      const client = await Client.findByIdAndUpdate(userTypeId, body.client, {new:true})
+      const metric = await Metric.findByIdAndUpdate(client.metric, body.metric, {new:true})
+
+      await updateInterests(Specialization, body.specializations, 'clientsId', userTypeId)
+      await updateInterests(Discipline, body.disciplines, 'clientsId', userTypeId)
       
       res.status(201).json(client)
     }catch(error) {
