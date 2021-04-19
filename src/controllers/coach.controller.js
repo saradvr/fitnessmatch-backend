@@ -7,11 +7,24 @@ const updateInterests = require('../utils/updateInterests')
 module.exports = {
   async update(req, res) {
     try {
-      const { body, params: {coachId} } = req
-      const coach = await Coach.findByIdAndUpdate( coachId, body, {new: true} )
+      const { body, user: {userTypeId} } = req
+      const coach = await Coach
+      .findByIdAndUpdate( 
+        userTypeId, 
+        body, 
+        {new: true} 
+      )
+      .populate({
+        path: 'specializations',
+        select: 'name'
+      })
+      .populate({
+        path: 'disciplines',
+        select: 'name'
+      })
 
-      await updateInterests(Specialization, body.specializations, 'coachesId', coachId)
-      await updateInterests(Discipline, body.disciplines, 'coachesId', coachId)
+      await updateInterests(Specialization, body.specializations, 'coachesId', userTypeId)
+      await updateInterests(Discipline, body.disciplines, 'coachesId', userTypeId)
 
       res.status(201).json({ message: 'Datos actualizados con éxito', coach})
     } catch (error) {
