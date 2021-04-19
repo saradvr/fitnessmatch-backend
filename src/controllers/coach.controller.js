@@ -7,6 +7,7 @@ const updateInterests = require('../utils/updateInterests')
 module.exports = {
   async update(req, res) {
     try {
+<<<<<<< HEAD
       const { body, user: {userTypeId} } = req
       const coach = await Coach
       .findByIdAndUpdate( 
@@ -22,6 +23,10 @@ module.exports = {
         path: 'disciplines',
         select: 'name'
       })
+=======
+      const { body, user:{ userTypeId } } = req
+      const coach = await Coach.findByIdAndUpdate( userTypeId, body, {new: true} )
+>>>>>>> 10ffced192b0b094edeeb69eec824f02c645eda0
 
       await updateInterests(Specialization, body.specializations, 'coachesId', userTypeId)
       await updateInterests(Discipline, body.disciplines, 'coachesId', userTypeId)
@@ -34,7 +39,7 @@ module.exports = {
   async setAvailability(req, res){
     try{
       const { body, user:{ userTypeId } } = req
-      const coach = await Coach.findByIdAndUpdate( userTypeId, body, {new: true} )
+      const coach = await Coach.findByIdAndUpdate( userTypeId, { availableHours: body.availableHours }, {new: true} )
       res.status(201).json({ message: 'Guardado con éxito', coach})
     } catch (error) {
       res.status(400).json({message: 'No se pudo guardar la disponibilidad', error})
@@ -47,6 +52,16 @@ module.exports = {
       res.status(201).json({message: 'Entrenador cargado con éxito', coach})
     } catch (error) {
       res.status(400).json({message: 'No se pudo obtener los datos del entrenador', error})
+    }
+  },
+  async getPublicCoach(req, res){
+    try {
+      const { params: {coachId}} = req
+      const coach = await Coach.findById( coachId ).select('-password')
+      console.log(coach)
+      res.status(201).json({message: 'Entrenador cargado con éxito', coach})
+    } catch (error) {
+      res.status(400).json({message: 'No se pudo cargar los datos del entrenador', error})
     }
   },
   async list(req, res) {
