@@ -7,7 +7,6 @@ const updateInterests = require('../utils/updateInterests')
 module.exports = {
   async update(req, res) {
     try {
-<<<<<<< HEAD
       const { body, user: {userTypeId} } = req
       const coach = await Coach
       .findByIdAndUpdate( 
@@ -23,10 +22,6 @@ module.exports = {
         path: 'disciplines',
         select: 'name'
       })
-=======
-      const { body, user:{ userTypeId } } = req
-      const coach = await Coach.findByIdAndUpdate( userTypeId, body, {new: true} )
->>>>>>> 10ffced192b0b094edeeb69eec824f02c645eda0
 
       await updateInterests(Specialization, body.specializations, 'coachesId', userTypeId)
       await updateInterests(Discipline, body.disciplines, 'coachesId', userTypeId)
