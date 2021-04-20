@@ -16,7 +16,7 @@ module.exports = {
         await user.save({ validateBeforeSave: false })
       } else if(userType === 'client'){
         const metric = await Metric.create({height:0, weight:0})
-        const client = await Client.create({name, user:user._id, metric:metric._id})
+        const client = await Client.create({name, profilePicture:"https://cdn.iconscout.com/icon/free/png-256/user-1648810-1401302.png", user:user._id, metric:metric._id})
         user.clientId = client._id
         await user.save({ validateBeforeSave: false})
         metric.clientId = client._id

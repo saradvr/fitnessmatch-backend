@@ -18,9 +18,10 @@ module.exports = {
   async update(req, res) {
     try{
       const {body, user: {userTypeId}} = req
-      const client = await Client.findByIdAndUpdate(userTypeId, body.client, {new:true})
-      const metric = await Metric.findByIdAndUpdate(client.metric, body.metric, {new:true})
-
+ 
+      const client = await Client.findByIdAndUpdate(userTypeId, body, {new:true})
+      const metric = await Metric.findByIdAndUpdate(client.metric._id, body, {new:true})
+      console.log(metric)
       await updateInterests(Specialization, body.specializations, 'clientsId', userTypeId)
       await updateInterests(Discipline, body.disciplines, 'clientsId', userTypeId)
       
@@ -29,4 +30,15 @@ module.exports = {
       res.status(400).json(`No se puede actualizar el cliente ${error}`)
     }
   },
+  async updatePicture(req, res)  {
+    try {
+      const {body, user: {userTypeId}} = req
+
+      const client = await Client.findByIdAndUpdate(userTypeId, body, {new:true})
+
+      res.status(201).json(client)
+    }catch(error) {
+      res.status(400).json('No se pudo actualizar la foto')
+    }
+  }
 }
