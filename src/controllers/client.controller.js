@@ -21,7 +21,7 @@ module.exports = {
  
       const client = await Client.findByIdAndUpdate(userTypeId, body, {new:true})
       const metric = await Metric.findByIdAndUpdate(client.metric._id, body, {new:true})
-      console.log(metric)
+
       await updateInterests(Specialization, body.specializations, 'clientsId', userTypeId)
       await updateInterests(Discipline, body.disciplines, 'clientsId', userTypeId)
       
