@@ -42,6 +42,12 @@ const coachSchema = new Schema({
   },
   availableHours: {
     type: [{ type: String }]
+  },
+  appointments: {
+    type: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Appointment'
+    }]
   }
 
 },{

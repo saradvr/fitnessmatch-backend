@@ -14,7 +14,10 @@ const clientSchema = new Schema({
     type: String,
   },
   appointments: {
-    type: Array,
+    type: [{
+      type: Schema.Types.ObjectId,
+      ref: 'Appointment'
+    }]
   },
   metric: {
     type: Schema.Types.ObjectId,
