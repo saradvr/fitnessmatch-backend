@@ -30,7 +30,9 @@ module.exports = {
   async getCoach(req, res){
     try {
       const { user: {userTypeId} } = req
-      const coach = await Coach.findById(userTypeId) 
+      const coach = await Coach
+      .findById(userTypeId)
+      .populate('appointments')
       res.status(201).json({message: 'Entrenador cargado con éxito', coach})
     } catch (error) {
       res.status(400).json({message: 'No se pudo obtener los datos del entrenador', error})
