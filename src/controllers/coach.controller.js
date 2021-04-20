@@ -31,6 +31,28 @@ module.exports = {
       res.status(400).json({message: 'No se pudo actualizar el entrenador', error})
     }
   },
+  async updateFiles(req, res) {
+    try {
+      const { body, user:{ userTypeId } } = req
+      const coach = await Coach.findByIdAndUpdate( userTypeId, {$push: { uploadedFiles: body.uploadedFiles }},  {new: true} ) 
+
+      res.status(201).json({ message: 'Link agregado exitosamente', coach})
+    } catch (error) {
+      res.status(400).json({message: 'No se pudo agregar el link', error})
+    }
+  },
+  async deleteFiles(req, res) {
+    try {
+      const { body, user:{ userTypeId } } = req
+      const coach = await Coach.findById( userTypeId ) 
+      coach.uploadedFiles = coach.uploadedFiles.filter(item => item !== body.uploadedFiles)
+      await coach.save({ validateBeforeSave: false })
+
+      res.status(201).json({ message: 'Video eliminado exitosamente', coach})
+    } catch (error) {
+      res.status(400).json({message: 'No se pudo eliminar el video', error})
+    }
+  },
   async setAvailability(req, res){
     try{
       const { body, user:{ userTypeId } } = req
@@ -53,7 +75,6 @@ module.exports = {
     try {
       const { params: {coachId}} = req
       const coach = await Coach.findById( coachId ).select('-password')
-      console.log(coach)
       res.status(201).json({message: 'Entrenador cargado con éxito', coach})
     } catch (error) {
       res.status(400).json({message: 'No se pudo cargar los datos del entrenador', error})
