@@ -66,7 +66,8 @@ module.exports = {
         { expiresIn: 60 * 60}
       )
 
-      res.status(201).json({token})
+      const userKind = user.coachId ? 'coach' : 'client' 
+      res.status(201).json({token, userKind})
     } catch(error) {
       res.status(401).json({message: error.message})
     }
