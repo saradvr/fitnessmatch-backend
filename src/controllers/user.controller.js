@@ -16,7 +16,7 @@ module.exports = {
         await user.save({ validateBeforeSave: false })
       } else if(userType === 'client'){
         const metric = await Metric.create({height:0, weight:0})
-        const client = await Client.create({name, user:user._id, metric:metric._id})
+        const client = await Client.create({name, profilePicture:"https://cdn.iconscout.com/icon/free/png-256/user-1648810-1401302.png", user:user._id, metric:metric._id})
         user.clientId = client._id
         await user.save({ validateBeforeSave: false})
         metric.clientId = client._id
@@ -66,7 +66,8 @@ module.exports = {
         { expiresIn: 60 * 60}
       )
 
-      res.status(201).json({token})
+      const userKind = user.coachId ? 'coach' : 'client' 
+      res.status(201).json({token, userKind})
     } catch(error) {
       res.status(401).json({message: error.message})
     }
