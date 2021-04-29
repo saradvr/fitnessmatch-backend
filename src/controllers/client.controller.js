@@ -46,12 +46,15 @@ module.exports = {
   async getClient(req, res){
     try {
       const { user: {userTypeId} } = req
-      const client = await Client.findById(userTypeId).populate('metric')
+      const client = await Client.findById(userTypeId)
+      .populate('metric')
+      .populate('appointments')
+      .populate('specializations')
+      .populate('disciplines')
 
       res.status(201).json({message: 'Cliente cargado con éxito', client})
     } catch (error) {
       res.status(400).json({message: 'No se pudo obtener los datos del cliente', error})
     }
   },
-
 }
