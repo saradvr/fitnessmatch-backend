@@ -13,6 +13,10 @@ const appointmentSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Client'
   },
+  transaction: {
+    type: Schema.Types.ObjectId,
+    ref:'Transaction'
+  },
   status: {
     type: String,
     required: true,
