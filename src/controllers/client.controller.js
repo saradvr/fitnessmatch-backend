@@ -51,6 +51,7 @@ module.exports = {
       .populate('appointments')
       .populate('specializations')
       .populate('disciplines')
+      const client = await Client.findById(userTypeId).populate('metric').populate('user')
 
       res.status(201).json({message: 'Cliente cargado con éxito', client})
     } catch (error) {
