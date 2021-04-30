@@ -2,6 +2,11 @@
   "name": "fitnessmatch-backend",
   "version": "1.0.0",
   "main": "src/server.js",
+  "engines": {
+    "node": "14.15.3",
+    "yarn": "1.22.10",
+    "npm": "6.14.9"
+  },
   "scripts": {
     "start": "node src/server.js",
     "dev": "nodemon src/server.js"
