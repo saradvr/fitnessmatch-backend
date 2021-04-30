@@ -51,7 +51,23 @@ module.exports = {
       .populate('appointments')
       .populate('specializations')
       .populate('disciplines')
-      const client = await Client.findById(userTypeId).populate('metric').populate('user')
+      .populate('user')
+
+      res.status(201).json({message: 'Cliente cargado con éxito', client})
+    } catch (error) {
+      res.status(400).json({message: 'No se pudo obtener los datos del cliente', error})
+    }
+  },
+  async getPublicClient(req, res){
+    try {
+      const { params: {clientId} } = req
+      const client = await Client.findById(clientId)
+      .populate('metric')
+      .populate('appointments')
+      .populate('specializations')
+      .populate('disciplines')
+      .populate('user')
+      .select('-password')
 
       res.status(201).json({message: 'Cliente cargado con éxito', client})
     } catch (error) {
